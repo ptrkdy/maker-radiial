@@ -1,0 +1,43 @@
+# Maker Robot Server - Docker Compose configuration
+#
+# Usage:
+#   docker-compose up -d        # Start the server
+#   docker-compose logs -f      # View logs
+#   docker-compose down         # Stop the server
+#
+# For macOS USB device access, you'll need to use socat to forward
+# the serial ports into the container (see README).
+
+services:
+  maker-server:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: maker-server
+    ports:
+      - "5577:5577"
+    volumes:
+      # Mount lerobot source code
+      - ../lerobot:/app/lerobot:ro
+      # Mount the server code for development
+      - ./python:/app/python:ro
+    environment:
+      - MAKER_SERVER_HOST=0.0.0.0
+      - MAKER_SERVER_PORT=5577
+    # For Linux: uncomment to access USB devices directly
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    #   - /dev/ttyUSB1:/dev/ttyUSB1
+    # privileged: true
+    restart: unless-stopped
+
+  # Alternative: socat forwarder for macOS USB access
+  # This creates a network-accessible serial port
+  # socat-usb0:
+  #   image: alpine/socat
+  #   container_name: socat-usb0
+  #   command: tcp-listen:5578,reuseaddr,fork file:/dev/tty.usbmodem5A680092181,raw,echo=0,b1000000
+  #   devices:
+  #     - /dev/tty.usbmodem5A680092181:/dev/tty.usbmodem5A680092181
+  #   ports:
+  #     - "5578:5578"

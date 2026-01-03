@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "maker": {
+      "command": "bun",
+      "args": ["run", "/Users/patrick/coding/personal/maker-radiial/src/mcp/server.ts"]
+    }
+  }
+}
