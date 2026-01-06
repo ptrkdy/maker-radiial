@@ -3,6 +3,7 @@ import { Box, Text, useStdout } from "ink";
 import { StatusIndicator, StatusType } from "./common/StatusIndicator.js";
 import { useRobotStore } from "../stores/robotStore.js";
 import { useUIStore } from "../stores/uiStore.js";
+import { theme } from "../theme.js";
 
 export function Header() {
   const { robot, teleop } = useRobotStore();
@@ -36,8 +37,8 @@ export function Header() {
       overflow="hidden"
     >
       <Box gap={1} flexShrink={1}>
-        <Text bold color="cyan">
-          maker
+        <Text bold color={theme.accent}>
+          [R/] maker
         </Text>
         <Text color="gray">|</Text>
         <Text color="white" wrap="truncate">

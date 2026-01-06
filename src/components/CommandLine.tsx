@@ -12,6 +12,7 @@ import { useRobotStore } from "../stores/robotStore.js";
 import { useDatasetStore } from "../stores/datasetStore.js";
 import { useUIStore } from "../stores/uiStore.js";
 import { useToast } from "./common/Toast.js";
+import { theme } from "../theme.js";
 
 // Register commands on import
 registerAllCommands();
@@ -124,9 +125,15 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
 
   // Command preview based on current input
   const commandPreview = useMemo(() => {
-    if (!input.startsWith("/") || input.length < 2) return null;
+    if (!input.startsWith("/")) return null;
 
     const searchTerm = input.slice(1).toLowerCase().split(" ")[0];
+
+    // If just "/" is typed, show all commands
+    if (searchTerm === "") {
+      return allCommands.slice(0, 6);
+    }
+
     const matches = allCommands.filter(
       (cmd) =>
         cmd.name.toLowerCase().startsWith(searchTerm) ||
@@ -161,9 +168,13 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
   );
 
   const clearChat = useCallback(() => {
+    // Clear the terminal to prevent rendering artifacts
+    if (stdout) {
+      stdout.write("\x1b[2J\x1b[H");
+    }
     setChatHistory([]);
     setScrollOffset(0);
-  }, []);
+  }, [stdout]);
 
   const createContext = useCallback(
     (): CommandContext => ({
@@ -512,13 +523,13 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
   const getMessageColor = (type: ChatMessage["type"]): string => {
     switch (type) {
       case "user":
-        return "cyan";
+        return theme.accent;
       case "error":
-        return "red";
+        return theme.error;
       case "success":
-        return "green";
+        return theme.success;
       default:
-        return "white";
+        return theme.textPrimary;
     }
   };
 
@@ -580,9 +591,9 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
         {/* Mini header */}
         <Box justifyContent="center" paddingY={0}>
           <Text color="gray" dimColor>
-            <Text color="cyan">/help</Text> commands •{" "}
-            <Text color="cyan">/menu</Text> interactive •{" "}
-            <Text color="cyan">/exit</Text> quit
+            <Text color={theme.accent}>/help</Text> commands •{" "}
+            <Text color={theme.accent}>/menu</Text> interactive •{" "}
+            <Text color={theme.accent}>/exit</Text> quit
           </Text>
         </Box>
 
@@ -595,12 +606,12 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
             flexDirection="column"
             marginTop={1}
             borderStyle="round"
-            borderColor="cyan"
+            borderColor={theme.accent}
             width={54}
           >
             {/* Input row - always at top, position stays fixed */}
             <Box paddingX={2} paddingY={0}>
-              <Text color="cyan" bold>
+              <Text color={theme.accent} bold>
                 {"❯ "}
               </Text>
               {autocompleteIndex >= 0 ? (
@@ -623,15 +634,15 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
                   return (
                     <Box key={cmd.name} paddingX={2}>
                       <Text
-                        color={isSelected ? "black" : "cyan"}
-                        backgroundColor={isSelected ? "cyan" : undefined}
+                        color={isSelected ? "black" : theme.accent}
+                        backgroundColor={isSelected ? theme.accent : undefined}
                         bold={isSelected}
                       >
                         /{cmd.name}
                       </Text>
                       <Text
                         color={isSelected ? "black" : "gray"}
-                        backgroundColor={isSelected ? "cyan" : undefined}
+                        backgroundColor={isSelected ? theme.accent : undefined}
                       >
                         {" "}- {cmd.description.slice(0, 35)}
                         {cmd.description.length > 35 ? "..." : ""}
@@ -657,7 +668,7 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
                     <Box key={completion} paddingX={2}>
                       <Text
                         color={isSelected ? "black" : isDir ? "blue" : "white"}
-                        backgroundColor={isSelected ? "cyan" : undefined}
+                        backgroundColor={isSelected ? theme.accent : undefined}
                         bold={isSelected}
                       >
                         {completion}
@@ -684,10 +695,10 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
       {/* Mini header */}
       <Box justifyContent="center" width="100%" paddingY={0}>
         <Text color="gray" dimColor>
-          <Text color="cyan">/help</Text> commands •{" "}
-          <Text color="cyan">/menu</Text> interactive •{" "}
-          <Text color="cyan">/splash</Text> reset •{" "}
-          <Text color="cyan">/exit</Text> quit
+          <Text color={theme.accent}>/help</Text> commands •{" "}
+          <Text color={theme.accent}>/menu</Text> interactive •{" "}
+          <Text color={theme.accent}>/splash</Text> reset •{" "}
+          <Text color={theme.accent}>/exit</Text> quit
         </Text>
       </Box>
 
@@ -715,7 +726,7 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
         {/* Scroll hint and splash shortcut */}
         <Box justifyContent="center" width="100%">
           <Text color="white">
-            {canScrollUp ? "▲ PgUp" : "      "} │ {canScrollDown ? "PgDn ▼" : "      "} │ <Text color="cyan">/splash</Text> reset
+            {canScrollUp ? "▲ PgUp" : "      "} │ {canScrollDown ? "PgDn ▼" : "      "} │ <Text color={theme.accent}>/splash</Text> reset
           </Text>
         </Box>
 
@@ -724,21 +735,21 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
           flexDirection="column"
           marginTop={1}
           borderStyle="round"
-          borderColor="cyan"
+          borderColor={theme.accent}
           width={54}
         >
           {/* Input row */}
           <Box paddingX={2} paddingY={0}>
             {isExecuting ? (
               <Box>
-                <Text color="cyan">
+                <Text color={theme.accent}>
                   <Spinner type="dots" />
                 </Text>
                 <Text color="gray"> Processing...</Text>
               </Box>
             ) : (
               <>
-                <Text color="cyan" bold>
+                <Text color={theme.accent} bold>
                   {"❯ "}
                 </Text>
                 {autocompleteIndex >= 0 ? (
@@ -763,15 +774,15 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
                 return (
                   <Box key={cmd.name} paddingX={2}>
                     <Text
-                      color={isSelected ? "black" : "cyan"}
-                      backgroundColor={isSelected ? "cyan" : undefined}
+                      color={isSelected ? "black" : theme.accent}
+                      backgroundColor={isSelected ? theme.accent : undefined}
                       bold={isSelected}
                     >
                       /{cmd.name}
                     </Text>
                     <Text
                       color={isSelected ? "black" : "gray"}
-                      backgroundColor={isSelected ? "cyan" : undefined}
+                      backgroundColor={isSelected ? theme.accent : undefined}
                     >
                       {" "}- {cmd.description.slice(0, 35)}
                       {cmd.description.length > 35 ? "..." : ""}
@@ -797,7 +808,7 @@ export function CommandLine({ onNavigateToMenu }: CommandLineProps) {
                   <Box key={completion} paddingX={2}>
                     <Text
                       color={isSelected ? "black" : isDir ? "blue" : "white"}
-                      backgroundColor={isSelected ? "cyan" : undefined}
+                      backgroundColor={isSelected ? theme.accent : undefined}
                       bold={isSelected}
                     >
                       {completion}

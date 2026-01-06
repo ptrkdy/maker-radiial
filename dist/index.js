@@ -46128,6 +46128,20 @@ var useUIStore = create2((set, get) => ({
   })
 }));
 
+// src/theme.ts
+var theme = {
+  accent: "#8B9FE8",
+  accentLight: "#a0b3f0",
+  bgDeep: "#0a0a1a",
+  bgMid: "#0d1025",
+  textPrimary: "white",
+  textSecondary: "gray",
+  textMuted: "gray",
+  success: "green",
+  error: "red",
+  warning: "yellow"
+};
+
 // src/components/Header.tsx
 var jsx_dev_runtime2 = __toESM(require_jsx_dev_runtime(), 1);
 function Header() {
@@ -46159,8 +46173,8 @@ function Header() {
         children: [
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Text, {
             bold: true,
-            color: "cyan",
-            children: "maker"
+            color: theme.accent,
+            children: "[R/] maker"
           }, undefined, false, undefined, this),
           /* @__PURE__ */ jsx_dev_runtime2.jsxDEV(Text, {
             color: "gray",
@@ -46375,20 +46389,21 @@ function Spinner({ type = "dots" }) {
 var build_default2 = Spinner;
 
 // src/components/CommandLine.tsx
-import path from "path";
+import path2 from "path";
 import fs2 from "fs";
 import os3 from "os";
 
 // src/components/Welcome.tsx
 var jsx_dev_runtime5 = __toESM(require_jsx_dev_runtime(), 1);
-var MAKER_ASCII = `
- \u2588\u2588\u2588\u2557   \u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557  \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2557
- \u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551 \u2588\u2588\u2554\u255D\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557
- \u2588\u2588\u2554\u2588\u2588\u2588\u2588\u2554\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2554\u255D \u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D
- \u2588\u2588\u2551\u255A\u2588\u2588\u2554\u255D\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2588\u2588\u2557 \u2588\u2588\u2554\u2550\u2550\u255D  \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557
- \u2588\u2588\u2551 \u255A\u2550\u255D \u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551  \u2588\u2588\u2551
- \u255A\u2550\u255D     \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D
-`;
+var BANNER_ASCII = `
+ \u256D\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256E
+ \u2502 \u2588\u2588\u2588\u2588\u2588\u2588\u2557  \u2502  \u2588\u2588\u2588\u2557   \u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557  \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2557
+ \u2502 \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557 \u2502  \u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551 \u2588\u2588\u2554\u255D\u2588\u2588\u2554\u2550\u2550\u2550\u2550\u255D\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557
+ \u2502 \u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D \u2502  \u2588\u2588\u2554\u2588\u2588\u2588\u2588\u2554\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2554\u255D \u2588\u2588\u2588\u2588\u2588\u2557  \u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255D
+ \u2502 \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557 \u2502  \u2588\u2588\u2551\u255A\u2588\u2588\u2554\u255D\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2554\u2550\u2588\u2588\u2557 \u2588\u2588\u2554\u2550\u2550\u255D  \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557
+ \u2502 \u2588\u2588\u2551  \u2588\u2588\u2551 \u2502  \u2588\u2588\u2551 \u255A\u2550\u255D \u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2551  \u2588\u2588\u2551
+ \u2502 \u255A\u2550\u255D  \u255A\u2550\u255D \u2502  \u255A\u2550\u255D     \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D\u255A\u2550\u2550\u2550\u2550\u2550\u2550\u255D\u255A\u2550\u255D  \u255A\u2550\u255D
+ \u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256F`;
 function Welcome({ compact = false }) {
   if (compact) {
     return /* @__PURE__ */ jsx_dev_runtime5.jsxDEV(Box_default, {
@@ -46397,8 +46412,8 @@ function Welcome({ compact = false }) {
       children: [
         /* @__PURE__ */ jsx_dev_runtime5.jsxDEV(Text, {
           bold: true,
-          color: "cyan",
-          children: "MAKER"
+          color: theme.accent,
+          children: "[R/] MAKER"
         }, undefined, false, undefined, this),
         /* @__PURE__ */ jsx_dev_runtime5.jsxDEV(Text, {
           color: "gray",
@@ -46412,8 +46427,8 @@ function Welcome({ compact = false }) {
     alignItems: "center",
     children: [
       /* @__PURE__ */ jsx_dev_runtime5.jsxDEV(Text, {
-        color: "cyan",
-        children: MAKER_ASCII
+        color: theme.accent,
+        children: BANNER_ASCII
       }, undefined, false, undefined, this),
       /* @__PURE__ */ jsx_dev_runtime5.jsxDEV(Text, {
         color: "gray",
@@ -46433,13 +46448,13 @@ function Welcome({ compact = false }) {
           children: [
             "Type ",
             /* @__PURE__ */ jsx_dev_runtime5.jsxDEV(Text, {
-              color: "cyan",
+              color: theme.accent,
               children: "/help"
             }, undefined, false, undefined, this),
             " for commands or",
             " ",
             /* @__PURE__ */ jsx_dev_runtime5.jsxDEV(Text, {
-              color: "cyan",
+              color: theme.accent,
               children: "/menu"
             }, undefined, false, undefined, this),
             " to open the interactive menu"
@@ -46727,11 +46742,210 @@ var TELEOP_TYPES = [
 ];
 // src/lerobot/ports.ts
 var import_serialport = __toESM(require_dist16(), 1);
+
+// src/lerobot/client.ts
+var {spawn } = globalThis.Bun;
+import path from "path";
+var DEFAULT_SERVER_URL = "http://127.0.0.1:5577";
+var SERVER_STARTUP_TIMEOUT_MS = 1e4;
+var HEALTH_CHECK_INTERVAL_MS = 500;
+var serverProcess = null;
+var serverUrl = DEFAULT_SERVER_URL;
+async function isServerHealthy() {
+  try {
+    const response = await fetch(`${serverUrl}/health`, {
+      method: "GET",
+      signal: AbortSignal.timeout(2000)
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.status === "ok";
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+async function ensureServerRunning() {
+  if (await isServerHealthy()) {
+    return { success: true };
+  }
+  const scriptsDir = path.join(import.meta.dir, "../../scripts");
+  const startScript = path.join(scriptsDir, "start-server.sh");
+  const serverScript = path.join(import.meta.dir, "../../python/server.py");
+  console.log(`Starting Maker Robot Server...`);
+  try {
+    const fs2 = await import("fs");
+    const useStartScript = fs2.existsSync(startScript);
+    if (useStartScript) {
+      serverProcess = spawn({
+        cmd: ["bash", startScript],
+        stdout: "pipe",
+        stderr: "pipe",
+        env: {
+          ...process.env,
+          MAKER_SERVER_PORT: "5577",
+          MAKER_SERVER_HOST: "127.0.0.1"
+        }
+      });
+    } else {
+      serverProcess = spawn({
+        cmd: ["python3", serverScript],
+        stdout: "pipe",
+        stderr: "pipe",
+        env: {
+          ...process.env,
+          MAKER_SERVER_PORT: "5577",
+          MAKER_SERVER_HOST: "127.0.0.1"
+        }
+      });
+    }
+    const startTime = Date.now();
+    while (Date.now() - startTime < SERVER_STARTUP_TIMEOUT_MS) {
+      if (await isServerHealthy()) {
+        console.log("Maker Robot Server started successfully");
+        return { success: true };
+      }
+      if (serverProcess.exitCode !== null) {
+        const stderr = await new Response(serverProcess.stderr).text();
+        return {
+          success: false,
+          error: `Server process exited with code ${serverProcess.exitCode}: ${stderr}`
+        };
+      }
+      await new Promise((resolve) => setTimeout(resolve, HEALTH_CHECK_INTERVAL_MS));
+    }
+    serverProcess.kill();
+    return { success: false, error: "Server startup timed out" };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error)
+    };
+  }
+}
+async function serverRequest(endpoint, options = {}) {
+  const { method = "GET", body, autoStart = true } = options;
+  if (autoStart) {
+    const startResult = await ensureServerRunning();
+    if (!startResult.success) {
+      return { success: false, error: startResult.error };
+    }
+  }
+  try {
+    const fetchOptions = {
+      method,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    if (body) {
+      fetchOptions.body = JSON.stringify(body);
+    }
+    const response = await fetch(`${serverUrl}${endpoint}`, fetchOptions);
+    const data = await response.json();
+    if (!response.ok || !data.success) {
+      return { success: false, error: data.error || `HTTP ${response.status}` };
+    }
+    return { success: true, data };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error)
+    };
+  }
+}
+async function listPorts() {
+  const result = await serverRequest("/ports");
+  if (result.success && result.data) {
+    return { success: true, ports: result.data.ports };
+  }
+  return { success: false, error: result.error };
+}
+async function connectRobot(robotType, port, options = {}) {
+  const result = await serverRequest("/robot/connect", {
+    method: "POST",
+    body: {
+      robot_type: robotType,
+      port,
+      id: options.id,
+      calibrate: options.calibrate ?? false
+    }
+  });
+  if (result.success && result.data) {
+    return { success: true, robot: result.data };
+  }
+  return { success: false, error: result.error };
+}
+async function disconnectRobot(robotId) {
+  const result = await serverRequest("/robot/disconnect", {
+    method: "POST",
+    body: { id: robotId }
+  });
+  return { success: result.success, error: result.error };
+}
+async function getRobotObservation(robotId) {
+  const query = robotId ? `?id=${encodeURIComponent(robotId)}` : "";
+  const result = await serverRequest(`/robot/observation${query}`);
+  if (result.success && result.data) {
+    return { success: true, observations: result.data.observations };
+  }
+  return { success: false, error: result.error };
+}
+async function getRobotStatus() {
+  const result = await serverRequest("/robot/status");
+  if (result.success && result.data) {
+    return { success: true, robots: result.data.robots, count: result.data.count };
+  }
+  return { success: false, error: result.error };
+}
+async function connectTeleop(teleopType, port, options = {}) {
+  const result = await serverRequest("/teleop/connect", {
+    method: "POST",
+    body: {
+      teleop_type: teleopType,
+      port,
+      id: options.id,
+      calibrate: options.calibrate ?? false
+    }
+  });
+  if (result.success && result.data) {
+    return { success: true, teleop: result.data };
+  }
+  return { success: false, error: result.error };
+}
+async function disconnectTeleop(teleopId) {
+  const result = await serverRequest("/teleop/disconnect", {
+    method: "POST",
+    body: { id: teleopId }
+  });
+  return { success: result.success, error: result.error };
+}
+async function getTeleopStatus() {
+  const result = await serverRequest("/teleop/status");
+  if (result.success && result.data) {
+    return { success: true, teleops: result.data.teleops, count: result.data.count };
+  }
+  return { success: false, error: result.error };
+}
+
+// src/lerobot/ports.ts
 async function findPorts() {
+  if (await isServerHealthy()) {
+    const result = await listPorts();
+    if (result.success && result.ports) {
+      return result.ports.map((p) => ({
+        device: p.device,
+        description: p.description,
+        hwid: p.hwid,
+        isLikelyRobot: p.is_likely_robot
+      }));
+    }
+  }
   try {
     const ports = await import_serialport.SerialPort.list();
     return ports.map((port) => {
-      const isLikelyRobot = port.manufacturer?.toLowerCase().includes("ftdi") || port.manufacturer?.toLowerCase().includes("silicon") || port.vendorId === "0403" || port.vendorId === "10c4" || port.path.includes("ttyUSB") || port.path.includes("ttyACM") || port.path.includes("cu.usbserial") || port.path.includes("cu.usbmodem");
+      const isLikelyRobot = port.manufacturer?.toLowerCase().includes("ftdi") || port.manufacturer?.toLowerCase().includes("silicon") || port.manufacturer?.toLowerCase().includes("qinheng") || port.vendorId === "0403" || port.vendorId === "10c4" || port.vendorId === "1a86" || port.path.includes("ttyUSB") || port.path.includes("ttyACM") || port.path.includes("cu.usbserial") || port.path.includes("cu.usbmodem");
       return {
         device: port.path,
         description: port.manufacturer || port.pnpId || "Unknown device",
@@ -46745,264 +46959,80 @@ async function findPorts() {
   }
 }
 // src/lerobot/robot.ts
-var {spawn } = globalThis.Bun;
-async function connectRobot(robotType, port) {
-  try {
-    const proc = spawn({
-      cmd: [
-        "python",
-        "-c",
-        `
-import json
-try:
-    from lerobot_mcp.tools.robot import robot_connect_impl
-    result = robot_connect_impl("${robotType}", "${port}")
-    print(json.dumps(result))
-except ImportError:
-    print(json.dumps({"success": False, "error": "lerobot_mcp not installed"}))
-except Exception as e:
-    print(json.dumps({"success": False, "error": str(e)}))
-`
-      ],
-      stdout: "pipe",
-      stderr: "pipe"
-    });
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-    const data = JSON.parse(output);
-    if (data.success) {
-      return {
-        success: true,
-        robot: {
-          id: data.id || `${robotType}_${Date.now()}`,
-          robotType,
-          port,
-          state: "connected",
-          cameras: data.cameras || {}
-        }
-      };
-    }
+async function connectRobot2(robotType, port) {
+  const result = await connectRobot(robotType, port);
+  if (result.success && result.robot) {
     return {
-      success: false,
-      error: data.error || "Failed to connect to robot"
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : String(error)
+      success: true,
+      robot: {
+        id: result.robot.id,
+        robotType: result.robot.robot_type,
+        port: result.robot.port,
+        state: "connected",
+        cameras: {}
+      }
     };
   }
+  return {
+    success: false,
+    error: result.error || "Failed to connect to robot"
+  };
 }
-async function disconnectRobot(robotId) {
-  try {
-    const proc = spawn({
-      cmd: [
-        "python",
-        "-c",
-        `
-import json
-try:
-    from lerobot_mcp.tools.robot import robot_disconnect_impl
-    result = robot_disconnect_impl("${robotId}")
-    print(json.dumps(result))
-except ImportError:
-    print(json.dumps({"success": False, "error": "lerobot_mcp not installed"}))
-except Exception as e:
-    print(json.dumps({"success": False, "error": str(e)}))
-`
-      ],
-      stdout: "pipe",
-      stderr: "pipe"
-    });
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-    return JSON.parse(output);
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : String(error)
-    };
-  }
+async function disconnectRobot2(robotId) {
+  return disconnectRobot(robotId);
 }
-async function getRobotObservation(robotId) {
-  try {
-    const idArg = robotId ? `"${robotId}"` : "None";
-    const proc = spawn({
-      cmd: [
-        "python",
-        "-c",
-        `
-import json
-try:
-    from lerobot_mcp.tools.robot import robot_get_observation_impl
-    result = robot_get_observation_impl(${idArg})
-    print(json.dumps(result))
-except ImportError:
-    print(json.dumps({"error": "lerobot_mcp not installed"}))
-except Exception as e:
-    print(json.dumps({"error": str(e)}))
-`
-      ],
-      stdout: "pipe",
-      stderr: "pipe"
-    });
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-    const data = JSON.parse(output);
-    if (data.error) {
-      return { error: data.error };
+async function getRobotObservation2(robotId) {
+  const result = await getRobotObservation(robotId);
+  if (result.success && result.observations) {
+    const observations = Object.values(result.observations);
+    if (observations.length > 0) {
+      return { observation: observations[0] };
     }
-    return { observation: data.observation || data };
-  } catch (error) {
-    return {
-      error: error instanceof Error ? error.message : String(error)
-    };
+    return { error: "No observations available" };
   }
+  return { error: result.error };
 }
 // src/lerobot/teleop.ts
-var {spawn: spawn2 } = globalThis.Bun;
-async function connectTeleop(teleopType, port) {
-  try {
-    const portArg = port ? `"${port}"` : "None";
-    const proc = spawn2({
-      cmd: [
-        "python",
-        "-c",
-        `
-import json
-try:
-    from lerobot_mcp.tools.teleop import teleop_connect_impl
-    result = teleop_connect_impl("${teleopType}", ${portArg})
-    print(json.dumps(result))
-except ImportError:
-    print(json.dumps({"success": False, "error": "lerobot_mcp not installed"}))
-except Exception as e:
-    print(json.dumps({"success": False, "error": str(e)}))
-`
-      ],
-      stdout: "pipe",
-      stderr: "pipe"
-    });
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-    const data = JSON.parse(output);
-    if (data.success) {
-      return {
-        success: true,
-        teleop: {
-          id: data.id || `${teleopType}_${Date.now()}`,
-          deviceType: teleopType,
-          port: port || "",
-          state: "connected"
-        }
-      };
-    }
+async function connectTeleop2(teleopType, port) {
+  if (!port) {
+    return { success: false, error: "Port is required for leader arm connection" };
+  }
+  const result = await connectTeleop(teleopType, port);
+  if (result.success && result.teleop) {
     return {
-      success: false,
-      error: data.error || "Failed to connect to teleop device"
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : String(error)
+      success: true,
+      teleop: {
+        id: result.teleop.id,
+        deviceType: result.teleop.teleop_type,
+        port: result.teleop.port,
+        state: "connected"
+      }
     };
   }
+  return {
+    success: false,
+    error: result.error || "Failed to connect to teleop device"
+  };
 }
-async function disconnectTeleop(teleopId) {
-  try {
-    const proc = spawn2({
-      cmd: [
-        "python",
-        "-c",
-        `
-import json
-try:
-    from lerobot_mcp.tools.teleop import teleop_disconnect_impl
-    result = teleop_disconnect_impl("${teleopId}")
-    print(json.dumps(result))
-except ImportError:
-    print(json.dumps({"success": False, "error": "lerobot_mcp not installed"}))
-except Exception as e:
-    print(json.dumps({"success": False, "error": str(e)}))
-`
-      ],
-      stdout: "pipe",
-      stderr: "pipe"
-    });
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-    return JSON.parse(output);
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : String(error)
-    };
-  }
+async function disconnectTeleop2(teleopId) {
+  return disconnectTeleop(teleopId);
 }
 async function startTeleopSession(robotId, teleopId) {
-  try {
-    const proc = spawn2({
-      cmd: [
-        "python",
-        "-c",
-        `
-import json
-try:
-    from lerobot_mcp.tools.teleop import teleop_start_session_impl
-    result = teleop_start_session_impl("${robotId}", "${teleopId}")
-    print(json.dumps(result))
-except ImportError:
-    print(json.dumps({"success": False, "error": "lerobot_mcp not installed"}))
-except Exception as e:
-    print(json.dumps({"success": False, "error": str(e)}))
-`
-      ],
-      stdout: "pipe",
-      stderr: "pipe"
-    });
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-    return JSON.parse(output);
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : String(error)
-    };
+  const robotStatus = await getRobotStatus();
+  const teleopStatus = await getTeleopStatus();
+  if (!robotStatus.success || !robotStatus.robots || Object.keys(robotStatus.robots).length === 0) {
+    return { success: false, error: "No robot connected" };
   }
+  if (!teleopStatus.success || !teleopStatus.teleops || Object.keys(teleopStatus.teleops).length === 0) {
+    return { success: false, error: "No teleop connected" };
+  }
+  return { success: true };
 }
 async function stopTeleopSession() {
-  try {
-    const proc = spawn2({
-      cmd: [
-        "python",
-        "-c",
-        `
-import json
-try:
-    from lerobot_mcp.tools.teleop import teleop_stop_session_impl
-    result = teleop_stop_session_impl()
-    print(json.dumps(result))
-except ImportError:
-    print(json.dumps({"success": False, "error": "lerobot_mcp not installed"}))
-except Exception as e:
-    print(json.dumps({"success": False, "error": str(e)}))
-`
-      ],
-      stdout: "pipe",
-      stderr: "pipe"
-    });
-    const output = await new Response(proc.stdout).text();
-    await proc.exited;
-    return JSON.parse(output);
-  } catch (error) {
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : String(error)
-    };
-  }
+  return { success: true };
 }
 // src/lerobot/dataset.ts
-var {spawn: spawn3 } = globalThis.Bun;
+var {spawn: spawn2 } = globalThis.Bun;
 import { readdir, stat } from "fs/promises";
 import { join } from "path";
 import { homedir } from "os";
@@ -47040,10 +47070,10 @@ async function listLocalDatasets() {
     };
   }
 }
-async function getDatasetInfoFromPath(path, repoId) {
+async function getDatasetInfoFromPath(path2, repoId) {
   try {
-    const metaPath = join(path, "meta.json");
-    const infoPath = join(path, "info.json");
+    const metaPath = join(path2, "meta.json");
+    const infoPath = join(path2, "info.json");
     let metadata = null;
     try {
       const metaContent = await Bun.file(metaPath).text();
@@ -47056,7 +47086,7 @@ async function getDatasetInfoFromPath(path, repoId) {
     }
     let numEpisodes = 0;
     try {
-      const dataPath = join(path, "data");
+      const dataPath = join(path2, "data");
       const dataEntries = await readdir(dataPath);
       numEpisodes = dataEntries.filter((e) => e.startsWith("episode_") || e.endsWith(".parquet")).length;
     } catch {}
@@ -47074,7 +47104,7 @@ async function getDatasetInfoFromPath(path, repoId) {
 }
 async function searchHubDatasets(query) {
   try {
-    const proc = spawn3({
+    const proc = spawn2({
       cmd: [
         "python",
         "-c",
@@ -47114,7 +47144,7 @@ print(json.dumps(results))
 }
 async function pushDatasetToHub(localRepoId, hubRepoId, onOutput) {
   try {
-    const proc = spawn3({
+    const proc = spawn2({
       cmd: [
         "python",
         "-c",
@@ -47151,7 +47181,7 @@ print("Successfully pushed to Hub")
   }
 }
 // src/lerobot/record.ts
-var {spawn: spawn4 } = globalThis.Bun;
+var {spawn: spawn3 } = globalThis.Bun;
 function buildRecordCommand(config) {
   const args = [
     "lerobot-record",
@@ -47198,7 +47228,7 @@ function buildRecordCommand(config) {
 async function recordEpisode(config, onOutput) {
   const args = buildRecordCommand(config);
   try {
-    const proc = spawn4({
+    const proc = spawn3({
       cmd: args,
       stdout: "pipe",
       stderr: "pipe"
@@ -47237,11 +47267,11 @@ async function recordEpisode(config, onOutput) {
   }
 }
 // src/lerobot/replay.ts
-var {spawn: spawn5 } = globalThis.Bun;
+var {spawn: spawn4 } = globalThis.Bun;
 async function startReplay(datasetId, episode, robotId) {
   try {
     const robotArg = robotId ? `"${robotId}"` : "None";
-    const proc = spawn5({
+    const proc = spawn4({
       cmd: [
         "python",
         "-c",
@@ -47288,7 +47318,7 @@ except Exception as e:
 }
 async function stopReplay() {
   try {
-    const proc = spawn5({
+    const proc = spawn4({
       cmd: [
         "python",
         "-c",
@@ -47319,7 +47349,7 @@ except Exception as e:
 }
 async function getReplayStatus() {
   try {
-    const proc = spawn5({
+    const proc = spawn4({
       cmd: [
         "python",
         "-c",
@@ -47362,10 +47392,10 @@ except Exception as e:
   }
 }
 // src/lerobot/telemetry.ts
-var {spawn: spawn6 } = globalThis.Bun;
+var {spawn: spawn5 } = globalThis.Bun;
 async function getTelemetrySnapshot() {
   try {
-    const proc = spawn6({
+    const proc = spawn5({
       cmd: [
         "python",
         "-c",
@@ -47423,7 +47453,7 @@ except Exception as e:
 }
 async function getEnvironmentStatus() {
   try {
-    const proc = spawn6({
+    const proc = spawn5({
       cmd: [
         "python",
         "-c",
@@ -47492,10 +47522,10 @@ print(json.dumps(result))
   }
 }
 // src/lerobot/hub.ts
-var {spawn: spawn7 } = globalThis.Bun;
+var {spawn: spawn6 } = globalThis.Bun;
 async function downloadDataset(repoId, onOutput) {
   try {
-    const proc = spawn7({
+    const proc = spawn6({
       cmd: [
         "python",
         "-c",
@@ -47605,7 +47635,7 @@ var connectCommand = {
       };
     }
     context.appendOutput(`Connecting to ${robotType} on ${port}...`);
-    const result = await connectRobot(robotType, port);
+    const result = await connectRobot2(robotType, port);
     if (result.success && result.robot) {
       context.toast("success", `Connected to ${robotType}`);
       return {
@@ -47640,7 +47670,7 @@ var disconnectCommand = {
       };
     }
     const robotId = args[0] || state.robot.id;
-    const result = await disconnectRobot(robotId);
+    const result = await disconnectRobot2(robotId);
     if (result.success) {
       context.toast("success", "Robot disconnected");
       return {
@@ -47693,7 +47723,7 @@ var observationCommand = {
         error: "No robot connected"
       };
     }
-    const result = await getRobotObservation(state.robot.id);
+    const result = await getRobotObservation2(state.robot.id);
     if (result.error) {
       return {
         success: false,
@@ -47766,7 +47796,7 @@ var teleopConnectCommand = {
       };
     }
     context.appendOutput(`Connecting to ${deviceType}${port ? ` on ${port}` : ""}...`);
-    const result = await connectTeleop(deviceType, port);
+    const result = await connectTeleop2(deviceType, port);
     if (result.success && result.teleop) {
       context.toast("success", `Connected to ${deviceType}`);
       return {
@@ -47796,7 +47826,7 @@ var teleopDisconnectCommand = {
         error: "No teleop device connected"
       };
     }
-    const result = await disconnectTeleop(state.teleop.id);
+    const result = await disconnectTeleop2(state.teleop.id);
     if (result.success) {
       context.toast("success", "Teleop disconnected");
       return {
@@ -48555,18 +48585,18 @@ function getPathCompletions(partial, currentDir) {
     let expandedPartial = partial;
     let baseForExpansion = "";
     if (partial.startsWith("~")) {
-      expandedPartial = path.join(os3.homedir(), partial.slice(1));
+      expandedPartial = path2.join(os3.homedir(), partial.slice(1));
       baseForExpansion = "~";
     }
-    const resolvedPath = path.resolve(currentDir, expandedPartial);
-    const dirname = path.dirname(resolvedPath);
-    const basename = path.basename(resolvedPath);
+    const resolvedPath = path2.resolve(currentDir, expandedPartial);
+    const dirname = path2.dirname(resolvedPath);
+    const basename = path2.basename(resolvedPath);
     if (partial.endsWith("/") || partial === "" || partial === ".") {
       const targetDir = partial === "" || partial === "." ? currentDir : resolvedPath;
       try {
         const entries = fs2.readdirSync(targetDir);
         return entries.filter((e) => !e.startsWith(".")).slice(0, 20).map((e) => {
-          const fullPath = path.join(targetDir, e);
+          const fullPath = path2.join(targetDir, e);
           const isDir = fs2.statSync(fullPath).isDirectory();
           const prefix = partial === "" || partial === "." ? "" : partial;
           return prefix + e + (isDir ? "/" : "");
@@ -48579,12 +48609,12 @@ function getPathCompletions(partial, currentDir) {
       const entries = fs2.readdirSync(dirname);
       const matches = entries.filter((e) => e.toLowerCase().startsWith(basename.toLowerCase())).slice(0, 20);
       return matches.map((e) => {
-        const fullPath = path.join(dirname, e);
+        const fullPath = path2.join(dirname, e);
         const isDir = fs2.statSync(fullPath).isDirectory();
-        const dirPart = path.dirname(partial);
+        const dirPart = path2.dirname(partial);
         const prefix = dirPart === "." ? "" : dirPart + "/";
         if (baseForExpansion === "~") {
-          const relativeToDirname = path.relative(os3.homedir(), dirname);
+          const relativeToDirname = path2.relative(os3.homedir(), dirname);
           const tildePath = relativeToDirname ? "~/" + relativeToDirname : "~";
           return tildePath + "/" + e + (isDir ? "/" : "");
         }
@@ -48625,9 +48655,12 @@ function CommandLine({ onNavigateToMenu }) {
     }));
   }, []);
   const commandPreview = import_react26.useMemo(() => {
-    if (!input.startsWith("/") || input.length < 2)
+    if (!input.startsWith("/"))
       return null;
     const searchTerm = input.slice(1).toLowerCase().split(" ")[0];
+    if (searchTerm === "") {
+      return allCommands.slice(0, 6);
+    }
     const matches = allCommands.filter((cmd) => cmd.name.toLowerCase().startsWith(searchTerm) || cmd.aliases.some((a) => a.toLowerCase().startsWith(searchTerm)));
     return matches.slice(0, 6);
   }, [input, allCommands]);
@@ -48646,9 +48679,12 @@ function CommandLine({ onNavigateToMenu }) {
     setChatHistory((prev) => [...prev, { id, type, content }]);
   }, []);
   const clearChat = import_react26.useCallback(() => {
+    if (stdout) {
+      stdout.write("\x1B[2J\x1B[H");
+    }
     setChatHistory([]);
     setScrollOffset(0);
-  }, []);
+  }, [stdout]);
   const createContext7 = import_react26.useCallback(() => ({
     setOutput: (lines) => {
       appendToChat("system", lines);
@@ -48719,8 +48755,8 @@ function CommandLine({ onNavigateToMenu }) {
             return;
           } else {
             const targetPath = trimmedCmd.slice(3).trim();
-            const expandedPath = targetPath.startsWith("~") ? path.join(os3.homedir(), targetPath.slice(1)) : targetPath;
-            targetDir = path.resolve(cwd2, expandedPath);
+            const expandedPath = targetPath.startsWith("~") ? path2.join(os3.homedir(), targetPath.slice(1)) : targetPath;
+            targetDir = path2.resolve(cwd2, expandedPath);
           }
           try {
             const stat2 = fs2.statSync(targetDir);
@@ -48915,13 +48951,13 @@ function CommandLine({ onNavigateToMenu }) {
   const getMessageColor = (type) => {
     switch (type) {
       case "user":
-        return "cyan";
+        return theme.accent;
       case "error":
-        return "red";
+        return theme.error;
       case "success":
-        return "green";
+        return theme.success;
       default:
-        return "white";
+        return theme.textPrimary;
     }
   };
   const getMessagePrefix = (type) => {
@@ -48978,19 +49014,19 @@ function CommandLine({ onNavigateToMenu }) {
             dimColor: true,
             children: [
               /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                color: "cyan",
+                color: theme.accent,
                 children: "/help"
               }, undefined, false, undefined, this),
               " commands \u2022",
               " ",
               /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                color: "cyan",
+                color: theme.accent,
                 children: "/menu"
               }, undefined, false, undefined, this),
               " interactive \u2022",
               " ",
               /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                color: "cyan",
+                color: theme.accent,
                 children: "/exit"
               }, undefined, false, undefined, this),
               " quit"
@@ -49008,7 +49044,7 @@ function CommandLine({ onNavigateToMenu }) {
               flexDirection: "column",
               marginTop: 1,
               borderStyle: "round",
-              borderColor: "cyan",
+              borderColor: theme.accent,
               width: 54,
               children: [
                 /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Box_default, {
@@ -49016,7 +49052,7 @@ function CommandLine({ onNavigateToMenu }) {
                   paddingY: 0,
                   children: [
                     /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                      color: "cyan",
+                      color: theme.accent,
                       bold: true,
                       children: "\u276F "
                     }, undefined, false, undefined, this),
@@ -49046,8 +49082,8 @@ function CommandLine({ onNavigateToMenu }) {
                         paddingX: 2,
                         children: [
                           /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                            color: isSelected ? "black" : "cyan",
-                            backgroundColor: isSelected ? "cyan" : undefined,
+                            color: isSelected ? "black" : theme.accent,
+                            backgroundColor: isSelected ? theme.accent : undefined,
                             bold: isSelected,
                             children: [
                               "/",
@@ -49056,7 +49092,7 @@ function CommandLine({ onNavigateToMenu }) {
                           }, undefined, true, undefined, this),
                           /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
                             color: isSelected ? "black" : "gray",
-                            backgroundColor: isSelected ? "cyan" : undefined,
+                            backgroundColor: isSelected ? theme.accent : undefined,
                             children: [
                               " ",
                               "- ",
@@ -49092,7 +49128,7 @@ function CommandLine({ onNavigateToMenu }) {
                         paddingX: 2,
                         children: /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
                           color: isSelected ? "black" : isDir ? "blue" : "white",
-                          backgroundColor: isSelected ? "cyan" : undefined,
+                          backgroundColor: isSelected ? theme.accent : undefined,
                           bold: isSelected,
                           children: completion
                         }, undefined, false, undefined, this)
@@ -49129,25 +49165,25 @@ function CommandLine({ onNavigateToMenu }) {
           dimColor: true,
           children: [
             /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-              color: "cyan",
+              color: theme.accent,
               children: "/help"
             }, undefined, false, undefined, this),
             " commands \u2022",
             " ",
             /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-              color: "cyan",
+              color: theme.accent,
               children: "/menu"
             }, undefined, false, undefined, this),
             " interactive \u2022",
             " ",
             /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-              color: "cyan",
+              color: theme.accent,
               children: "/splash"
             }, undefined, false, undefined, this),
             " reset \u2022",
             " ",
             /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-              color: "cyan",
+              color: theme.accent,
               children: "/exit"
             }, undefined, false, undefined, this),
             " quit"
@@ -49185,7 +49221,7 @@ function CommandLine({ onNavigateToMenu }) {
                 canScrollDown ? "PgDn \u25BC" : "      ",
                 " \u2502 ",
                 /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                  color: "cyan",
+                  color: theme.accent,
                   children: "/splash"
                 }, undefined, false, undefined, this),
                 " reset"
@@ -49196,7 +49232,7 @@ function CommandLine({ onNavigateToMenu }) {
             flexDirection: "column",
             marginTop: 1,
             borderStyle: "round",
-            borderColor: "cyan",
+            borderColor: theme.accent,
             width: 54,
             children: [
               /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Box_default, {
@@ -49205,7 +49241,7 @@ function CommandLine({ onNavigateToMenu }) {
                 children: isExecuting ? /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Box_default, {
                   children: [
                     /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                      color: "cyan",
+                      color: theme.accent,
                       children: /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(build_default2, {
                         type: "dots"
                       }, undefined, false, undefined, this)
@@ -49218,7 +49254,7 @@ function CommandLine({ onNavigateToMenu }) {
                 }, undefined, true, undefined, this) : /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(jsx_dev_runtime7.Fragment, {
                   children: [
                     /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                      color: "cyan",
+                      color: theme.accent,
                       bold: true,
                       children: "\u276F "
                     }, undefined, false, undefined, this),
@@ -49249,8 +49285,8 @@ function CommandLine({ onNavigateToMenu }) {
                       paddingX: 2,
                       children: [
                         /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
-                          color: isSelected ? "black" : "cyan",
-                          backgroundColor: isSelected ? "cyan" : undefined,
+                          color: isSelected ? "black" : theme.accent,
+                          backgroundColor: isSelected ? theme.accent : undefined,
                           bold: isSelected,
                           children: [
                             "/",
@@ -49259,7 +49295,7 @@ function CommandLine({ onNavigateToMenu }) {
                         }, undefined, true, undefined, this),
                         /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
                           color: isSelected ? "black" : "gray",
-                          backgroundColor: isSelected ? "cyan" : undefined,
+                          backgroundColor: isSelected ? theme.accent : undefined,
                           children: [
                             " ",
                             "- ",
@@ -49295,7 +49331,7 @@ function CommandLine({ onNavigateToMenu }) {
                       paddingX: 2,
                       children: /* @__PURE__ */ jsx_dev_runtime7.jsxDEV(Text, {
                         color: isSelected ? "black" : isDir ? "blue" : "white",
-                        backgroundColor: isSelected ? "cyan" : undefined,
+                        backgroundColor: isSelected ? theme.accent : undefined,
                         bold: isSelected,
                         children: completion
                       }, undefined, false, undefined, this)
@@ -49751,7 +49787,7 @@ function RobotMenu() {
   };
   const handleConnectRobot = async (type, port) => {
     setIsConnectingRobot(true);
-    const result = await connectRobot(type, port);
+    const result = await connectRobot2(type, port);
     setIsConnectingRobot(false);
     if (result.success && result.robot) {
       setRobot(result.robot);
@@ -49765,7 +49801,7 @@ function RobotMenu() {
   const handleDisconnectRobot = async () => {
     if (!robot2)
       return;
-    const result = await disconnectRobot(robot2.id);
+    const result = await disconnectRobot2(robot2.id);
     if (result.success) {
       setRobot(null);
       addToast("success", "Robot disconnected");
@@ -49775,7 +49811,7 @@ function RobotMenu() {
   };
   const handleConnectTeleop = async (type, port) => {
     setIsConnectingTeleop(true);
-    const result = await connectTeleop(type, port);
+    const result = await connectTeleop2(type, port);
     setIsConnectingTeleop(false);
     if (result.success && result.teleop) {
       setTeleop(result.teleop);
@@ -49789,7 +49825,7 @@ function RobotMenu() {
   const handleDisconnectTeleop = async () => {
     if (!teleop2)
       return;
-    const result = await disconnectTeleop(teleop2.id);
+    const result = await disconnectTeleop2(teleop2.id);
     if (result.success) {
       setTeleop(null);
       addToast("success", "Teleop disconnected");

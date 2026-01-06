@@ -1,15 +1,17 @@
 import React from "react";
 import { Box, Text } from "ink";
+import { theme } from "../theme.js";
 
-// ASCII art for MAKER
-const MAKER_ASCII = `
- ███╗   ███╗ █████╗ ██╗  ██╗███████╗██████╗
- ████╗ ████║██╔══██╗██║ ██╔╝██╔════╝██╔══██╗
- ██╔████╔██║███████║█████╔╝ █████╗  ██████╔╝
- ██║╚██╔╝██║██╔══██║██╔═██╗ ██╔══╝  ██╔══██╗
- ██║ ╚═╝ ██║██║  ██║██║  ██╗███████╗██║  ██║
- ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
-`;
+// Combined [R/] MAKER ASCII art - single row layout with aligned text
+const BANNER_ASCII = `
+ ╭──────────╮
+ │ ██████╗  │  ███╗   ███╗ █████╗ ██╗  ██╗███████╗██████╗
+ │ ██╔══██╗ │  ████╗ ████║██╔══██╗██║ ██╔╝██╔════╝██╔══██╗
+ │ ██████╔╝ │  ██╔████╔██║███████║█████╔╝ █████╗  ██████╔╝
+ │ ██╔══██╗ │  ██║╚██╔╝██║██╔══██║██╔═██╗ ██╔══╝  ██╔══██╗
+ │ ██║  ██║ │  ██║ ╚═╝ ██║██║  ██║██║  ██╗███████╗██║  ██║
+ │ ╚═╝  ╚═╝ │  ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+ ╰──────────╯`;
 
 interface WelcomeProps {
   compact?: boolean;
@@ -19,8 +21,8 @@ export function Welcome({ compact = false }: WelcomeProps) {
   if (compact) {
     return (
       <Box flexDirection="column" alignItems="center">
-        <Text bold color="cyan">
-          MAKER
+        <Text bold color={theme.accent}>
+          [R/] MAKER
         </Text>
         <Text color="gray">by Radiial</Text>
       </Box>
@@ -29,7 +31,7 @@ export function Welcome({ compact = false }: WelcomeProps) {
 
   return (
     <Box flexDirection="column" alignItems="center">
-      <Text color="cyan">{MAKER_ASCII}</Text>
+      <Text color={theme.accent}>{BANNER_ASCII}</Text>
       <Text color="gray">by Radiial</Text>
       <Box marginTop={1}>
         <Text color="white">
@@ -38,8 +40,8 @@ export function Welcome({ compact = false }: WelcomeProps) {
       </Box>
       <Box marginTop={1}>
         <Text color="gray">
-          Type <Text color="cyan">/help</Text> for commands or{" "}
-          <Text color="cyan">/menu</Text> to open the interactive menu
+          Type <Text color={theme.accent}>/help</Text> for commands or{" "}
+          <Text color={theme.accent}>/menu</Text> to open the interactive menu
         </Text>
       </Box>
     </Box>
